@@ -3,3 +3,4 @@ tags
 build/
 __pycache__/
 .idea/
+docs/html/
