@@ -21,9 +21,9 @@ link_directories(
 )
 
 # Libs
-## SDL
 find_package(SDL2 REQUIRED)
 include_directories(${SDL2_INCLUDE_DIRS})
+
 set(OpenGL_GL_PREFERENCE GLVND)
 find_package(OpenGL REQUIRED)
 include_directories(${OPENGL_INCLUDE_DIRS})
@@ -38,7 +38,7 @@ set(IMGUI_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-message(${SDL2_LIBRARIES})
-message(${OPENGL_LIBRARIES})
-add_executable(${PROJECT_NAME} ${IMGUI_SRCS} main.cc)
+file(GLOB_RECURSE VIS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/visualization/*.cc")
+
+add_executable(${PROJECT_NAME} ${IMGUI_SRCS} ${VIS_SRCS} main.cc)
 target_link_libraries(${PROJECT_NAME} dl ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES})
