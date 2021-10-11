@@ -47,6 +47,10 @@ void ShowGraph() {
                     av::Style{.color = {255, 0, 128, 128}}}.Draw();
   av::Quadrilateral{{{{100, 600}, {200, 650}, {180, 700}, {100, 630}}},
                     av::Style{.color = {0, 0, 128, 128}, .is_fill=true}}.Draw();
+
+  // mainview
+  auto main_view = ImGui::GetMainViewport();
+  std::cout << main_view->Size.x << ", " << main_view->Size.y << std::endl;
 }
 
 // Main code

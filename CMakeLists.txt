@@ -10,6 +10,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
 
+
+file(GLOB_RECURSE CMAKE_FILES "${CMAKE_SOURCE_DIR}/cmake/*.cmake")
+foreach(CMAKE_FILE ${CMAKE_FILES})
+  include(${CMAKE_FILE})
+endforeach()
+
 include_directories(
   /usr/include/SDL2
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui
