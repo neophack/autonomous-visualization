@@ -8,7 +8,7 @@ namespace av {
 /// Generate mapgraph from apollo map
 class ApolloMap final : public MapAdapter {
  public:
-  MapGraph InitMap(const std::string& path) override const;
+  MapGraph InitMap(const std::string& path) const override ;
 };
 
 }  // namespace av

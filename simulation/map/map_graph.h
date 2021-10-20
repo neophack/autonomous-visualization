@@ -40,19 +40,23 @@ class MapGraph {
   /// Copy constructor
   MapGraph(const MapGraph&) = default;
   /// Copy operator
-  MapGraph& operator=MapGraph(const MapGraph&) = default;
+  MapGraph& operator=(const MapGraph&) = default;
   /// Move constructor
   MapGraph(MapGraph&&) = default;
   /// Move operator
-  MapGraph& operator=MapGraph(MapGraph&&) = default;
+  MapGraph& operator=(MapGraph&&) = default;
 
   /// Add node to graph
   void AddLaneNode(LaneNode&& node);
   /// Add edge
   void AddConnectEdge(const std::string& from, const std::string& to);
 
-  /// Draw the map
-  void Draw();
+  /// Get node from graph by node id
+  LaneNode* GetNode(const std::string& id);
+  /// Get successor nodes from graph by node id
+  std::unordered_set<std::string> GetNextNodes(const std::string& id);
+  /// Get all nodes
+  std::vector<std::string> GetAllNodes();
 
  private:
   std::unordered_map<std::string, LaneNode> nodes_{};

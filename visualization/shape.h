@@ -30,8 +30,6 @@ class Shape {
   Shape() = default;
   /// Construct with style
   explicit Shape(const Style& style);
-  /// Interface to draw the shape
-  virtual void Draw() = 0;
   /// Get the style struct
   Style* style();
 

@@ -20,6 +20,7 @@ include_directories(
   /usr/include/SDL2
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends
+  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 link_directories(
@@ -45,6 +46,15 @@ set(IMGUI_SRCS
 )
 
 file(GLOB_RECURSE VIS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/visualization/*.cc")
+file(GLOB_RECURSE SIM_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/simulation/*.cc")
 
-add_executable(${PROJECT_NAME} ${IMGUI_SRCS} ${VIS_SRCS} main.cc)
-target_link_libraries(${PROJECT_NAME} dl ${SDL2_LIBRARIES} ${OPENGL_LIBRARIES})
+add_executable(${PROJECT_NAME} ${IMGUI_SRCS} ${VIS_SRCS} ${SIM_SRCS} main.cc)
+message("${PROTOBUF_LIBRARIES}")
+target_link_libraries(
+  ${PROJECT_NAME} 
+  dl
+  ${SDL2_LIBRARIES}
+  ${OPENGL_LIBRARIES}
+  cyber
+  protobuf
+  )

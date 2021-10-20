@@ -181,59 +181,7 @@ function(PROTOBUF_COMPILE_DIRECTORY_FLAT PROTO_DIR TARGET_PREFIX PROTO_SRCS)
       VERBATIM)
   endforeach()
   set(${PROTO_SRCS} ${PROTO_SRC_LIST} PARENT_SCOPE)
-  include_directories(SYSTEM "${CMAKE_CURRENT_BINARY_DIR}/generated/${TARGET_PREFIX}")
-endfunction()
-
-# my added func to build with protos from cyber
-function(PROTOBUF_COMPILE_DIRECTORY_FLAT_WITH_DIR PROTO_DIR TARGET_PREFIX PROTO_SRCS DIR)
-  # Search for all the .proto files recursively.
-  file(GLOB_RECURSE PROTO_FILES RELATIVE ${PROTO_DIR} "${PROTO_DIR}/*.proto")
-  set(TARGET_ROOT "${CMAKE_CURRENT_BINARY_DIR}/generated/${TARGET_PREFIX}")
-
-  # Generate all the include paths.
-  foreach(PROTO_FILE ${PROTO_FILES})
-    get_filename_component(INCLUDE_DIR "${PROTO_DIR}/${PROTO_FILE}" DIRECTORY)
-    list(FIND _proto_include_paths ${INCLUDE_DIR} _contains_already)
-    if(${_contains_already} EQUAL -1)
-      list(APPEND _proto_include_paths -I ${INCLUDE_DIR})
-    endif()
-  endforeach()
-
-  # Search for all the other .proto files recursively.
-  file(GLOB_RECURSE OTHER_PROTO_FILES RELATIVE ${DIR} "${DIR}/*.proto")
-
-  # Generate all the include paths.
-  foreach(OTHER_PROTO_FILE ${OTHER_PROTO_FILES})
-    get_filename_component(INCLUDE_DIR "${DIR}/${OTHER_PROTO_FILE}" DIRECTORY)
-    list(FIND _proto_include_paths ${INCLUDE_DIR} _contains_already)
-    if(${_contains_already} EQUAL -1)
-      list(APPEND _proto_include_paths -I ${INCLUDE_DIR})
-    endif()
-  endforeach()
-
-  foreach(PROTO_FILE ${PROTO_FILES})
-    get_filename_component(PROTO_FILE_NAME ${PROTO_FILE} NAME)
-    set(TMP_TARGET "${TARGET_ROOT}/${PROTO_FILE_NAME}")
-    string(REGEX REPLACE ".proto$" ".pb.h" PROTO_FILE_PB_H "${TMP_TARGET}")
-    string(REGEX REPLACE ".proto$" ".pb.cc" PROTO_FILE_PB_CC "${TMP_TARGET}")
-
-    list(APPEND PROTO_SRC_LIST ${PROTO_FILE_PB_CC})
-
-    get_filename_component(TARGET_DIRECTORY ${PROTO_FILE_PB_H} DIRECTORY)
-    add_custom_command(
-      OUTPUT
-      "${PROTO_FILE_PB_H}"
-      "${PROTO_FILE_PB_CC}"
-      COMMAND ${CMAKE_COMMAND} -E make_directory ${TARGET_DIRECTORY}
-      # see --cpp_out and -I in the help of protoc for more details.
-      COMMAND "LD_LIBRARY_PATH=${PROTOBUF_LIBRARY_DIR}" ${PROTOBUF_PROTOC_EXECUTABLE}
-      ARGS --cpp_out "${TARGET_DIRECTORY}" ${_proto_include_paths}
-      "${PROTO_DIR}/${PROTO_FILE}"
-      DEPENDS "${PROTO_DIR}/${PROTO_FILE}"
-      VERBATIM)
-  endforeach()
-  set(${PROTO_SRCS} ${PROTO_SRC_LIST} PARENT_SCOPE)
-  include_directories(SYSTEM "${CMAKE_CURRENT_BINARY_DIR}/generated/${TARGET_PREFIX}")
+  include_directories(SYSTEM "${CMAKE_CURRENT_BINARY_DIR}/generated")
 endfunction()
 
 ###############################################

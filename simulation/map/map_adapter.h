@@ -11,7 +11,7 @@ namespace av {
 /// Interface for all adapter
 class MapAdapter {
  public:
-  virtual MapGraph InitMap(const std::string& path) = 0;
+  virtual MapGraph InitMap(const std::string& path) const = 0;
 };
 
 }  // namespace av

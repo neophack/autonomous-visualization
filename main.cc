@@ -8,7 +8,6 @@
 #else
 #include <SDL_opengl.h>
 #endif
-
 #include <iostream>
 
 #include "visualization/shape/circle.h"
@@ -17,6 +16,7 @@
 #include "visualization/shape/rectangle.h"
 #include "visualization/shape/triangle.h"
 #include "visualization/shape/quadrilateral.h"
+#include "simulation/world.h"
 
 void ShowGraph() {
   // circle
@@ -50,8 +50,10 @@ void ShowGraph() {
 
   // mainview
   auto main_view = ImGui::GetMainViewport();
-  std::cout << main_view->Size.x << ", " << main_view->Size.y << std::endl;
+  // std::cout << main_view->Size.x << ", " << main_view->Size.y << std::endl;
 }
+
+av::World world{};
 
 // Main code
 int main(int, char**) {
