@@ -21,6 +21,13 @@ include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/map
+  ${CMAKE_CURRENT_SOURCE_DIR}/common
+  ${CMAKE_CURRENT_SOURCE_DIR}/common/geometry
+  ${CMAKE_CURRENT_SOURCE_DIR}/visualization
+  ${CMAKE_CURRENT_SOURCE_DIR}/visualization/renderers
+  ${CMAKE_CURRENT_SOURCE_DIR}/simulation
+  ${CMAKE_CURRENT_SOURCE_DIR}/simulation/map
 )
 
 link_directories(
@@ -47,8 +54,17 @@ set(IMGUI_SRCS
 
 file(GLOB_RECURSE VIS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/visualization/*.cc")
 file(GLOB_RECURSE SIM_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/simulation/*.cc")
+file(GLOB_RECURSE COM_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/common/*.cc")
+file(GLOB_RECURSE MAP_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/map/*.cc")
 
-add_executable(${PROJECT_NAME} ${IMGUI_SRCS} ${VIS_SRCS} ${SIM_SRCS} main.cc)
+add_executable(
+  ${PROJECT_NAME}
+  ${COM_SRCS}
+  ${MAP_SRCS}
+  ${IMGUI_SRCS}
+  ${VIS_SRCS}
+  ${SIM_SRCS}
+  main.cc)
 message("${PROTOBUF_LIBRARIES}")
 target_link_libraries(
   ${PROJECT_NAME} 

@@ -1,7 +1,7 @@
 /// Define the 2d vector
 #pragma once
 
-namespace nv {
+namespace av {
 
 struct Vec2d {
   double x{0.};
@@ -25,4 +25,4 @@ double Length(const Vec2d& v);
 double Angle(const Vec2d& v1, const Vec2d& v2);
 Vec2d Rotate(const Vec2d& v, const double ang);
 
-}  // namespace nv
+}  // namespace av

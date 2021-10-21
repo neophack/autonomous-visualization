@@ -2,18 +2,20 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <array>
 
-#include "imgui.h"
+#include "point.h"
 
 /// namespace autonoumous visualization
 namespace av {
 
 /// Color struct
 struct Color {
-  int r{0};
-  int g{0};
-  int b{0};
-  int a{0};
+  unsigned char r{0};  // 0-255
+  unsigned char g{0};
+  unsigned char b{0};
+  unsigned char a{0};
 };
 
 /// Render style
@@ -24,17 +26,52 @@ struct Style {
   float width{0.1};
 };
 
-// Shape interface for all shapes
-class Shape {
- public:
-  Shape() = default;
-  /// Construct with style
-  explicit Shape(const Style& style);
-  /// Get the style struct
-  Style* style();
+/// Circle
+struct Circle {
+  Style style{};
 
- private:
-  Style style_{};
+  Point2d center{0, 0};
+  double radius{0.1};
 };
+
+/// Polygon 
+struct Polygon {
+  Style style{};
+
+  /// Points must be in clockwise order
+  std::vector<Point2d> points{};
+};
+
+/// Polyline
+struct Polyline {
+  Style style{};
+
+  std::vector<Point2d> points{};
+};
+
+/// Quadrilateral
+struct Quadrilateral {
+  Style style{};
+
+  /// Points must be in clockwise order
+  std::array<Point2d, 4> points{};
+};
+
+/// Rectangle
+struct Rectangle {
+  Style style{};
+
+  /// left-up and right-bottom point
+  std::array<Point2d, 2> points{};
+};
+
+/// Triangle
+struct Triangle {
+  Style style{};
+
+  /// Points must be in clockwise order
+  std::array<Point2d, 3> points{};
+};
+
 
 }  // namespace av

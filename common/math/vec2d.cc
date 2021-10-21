@@ -35,9 +35,9 @@ Vec2d operator-(const Vec2d& v1, const Vec2d& v2) {
   return {v1.x - v2.x, v1.y - v2.y};
 }
 
-Vec2d operator*(const Vec2d& v, const double n) { return {v1.x * n, v1.y * n}; }
+Vec2d operator*(const Vec2d& v, const double n) { return {v.x * n, v.y * n}; }
 
-Vec2d operator/(const Vec2d& v, const double n) { return {v1.x / n, v1.y / n}; }
+Vec2d operator/(const Vec2d& v, const double n) { return {v.x / n, v.y / n}; }
 
 double operator*(const Vec2d& v1, const Vec2d& v2) {
   return v1.x * v2.x + v1.y * v2.y;

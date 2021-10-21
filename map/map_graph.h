@@ -5,15 +5,9 @@
 #include <vector>
 #include <unordered_map>
 #include <unordered_set>
+#include "common/geometry/point.h"
 
 namespace av {
-
-/// Waypoint struct
-struct WayPoint {
-  double x{0.};
-  double y{0.};
-  double z{0.};
-};
 
 /// Overlap to describe markers(crosswalk, array, etc.)
 struct Overlap {
@@ -27,9 +21,9 @@ struct Overlap {
 struct LaneNode {
   std::string id{};
 
-  std::vector<WayPoint> center_line{};
-  std::vector<WayPoint> left_bound{};
-  std::vector<WayPoint> right_bound{};
+  std::vector<Point3d> center_line{};
+  std::vector<Point3d> left_bound{};
+  std::vector<Point3d> right_bound{};
 };
 
 /// Define the graph for map

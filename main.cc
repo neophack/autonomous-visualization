@@ -10,50 +10,7 @@
 #endif
 #include <iostream>
 
-#include "visualization/shape/circle.h"
-#include "visualization/shape/polyline.h"
-#include "visualization/shape/polygon.h"
-#include "visualization/shape/rectangle.h"
-#include "visualization/shape/triangle.h"
-#include "visualization/shape/quadrilateral.h"
 #include "simulation/world.h"
-
-void ShowGraph() {
-  // circle
-  av::Circle{{50, 50}, 50., av::Style{.text = "This\nis\na\ncircle"}}.Draw();
-  av::Circle{{150, 50}, 50., av::Style{.is_fill = true}}.Draw();
-  // polyline
-  av::PolyLine{{{0, 150}, {50, 150}, {100, 100}, {150, 130}},
-               av::Style{.text = "a\npolyline"}}.Draw();
-  av::PolyLine{{{200, 150}, {250, 150}, {300, 100}, {350, 130}},
-               av::Style{.color = {255, 128, 255, 255}}}.Draw();
-  // polyline
-  av::Polygon{{{0, 300}, {50, 250}, {100, 250}, {150, 300}, {100, 350}},
-              av::Style{.text = "a\npolygon"}}.Draw();
-  av::Polygon{{{100, 300}, {150, 250}, {200, 250}, {250, 300}, {200, 350}},
-              av::Style{.is_fill = true}}.Draw();
-  // rectangle
-  av::Rectangle{{{{0, 400}, {100, 450}}},
-                av::Style{.color = {0, 0, 240, 200}}}.Draw();
-  av::Rectangle{{{{100, 400}, {200, 450}}},
-                av::Style{.color = {0, 255, 240, 200}, .is_fill=true}}.Draw();
-  // triangle
-  av::Triangle{{{{0, 500}, {100, 550}, {50, 500}}},
-               av::Style{.color = {0, 0, 240, 200}}}.Draw();
-  av::Triangle{{{{100, 500}, {200, 550}, {250, 500}}},
-               av::Style{.color = {255, 0, 240, 200}, .is_fill=true}}.Draw();
-  // quadrilateral
-  av::Quadrilateral{{{{0, 600}, {100, 650}, {80, 700}, {0, 630}}},
-                    av::Style{.color = {255, 0, 128, 128}}}.Draw();
-  av::Quadrilateral{{{{100, 600}, {200, 650}, {180, 700}, {100, 630}}},
-                    av::Style{.color = {0, 0, 128, 128}, .is_fill=true}}.Draw();
-
-  // mainview
-  auto main_view = ImGui::GetMainViewport();
-  // std::cout << main_view->Size.x << ", " << main_view->Size.y << std::endl;
-}
-
-av::World world{};
 
 // Main code
 int main(int, char**) {
@@ -125,6 +82,8 @@ int main(int, char**) {
   // Our state
   ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
+  av::World world{};
+
   // Main loop
   bool done = false;
   while (!done) {
@@ -143,7 +102,17 @@ int main(int, char**) {
     ImGui::NewFrame();
 
     // test
-    ShowGraph();
+    // ShowGraph();
+    std::cout << "-----------------------------------------------" << std::endl;
+    std::cout << "frame_rate: " << ImGui::GetIO().Framerate << std::endl;
+    auto view = ImGui::GetMainViewport();
+    world.GetGuiViewConf()->window_width = view->Size.x;
+    world.GetGuiViewConf()->window_height = view->Size.y;
+    world.GetGuiViewConf()->zoom_ratio = 0.8;
+    world.GetGuiViewConf()->world_center_heading = 0.;
+    std::cout << "window (" << view->Size.x << ", " << view->Size.y << ")"
+              << std::endl;
+    world.Draw();
 
     // Rendering
     ImGui::Render();
