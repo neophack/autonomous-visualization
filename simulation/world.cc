@@ -38,7 +38,7 @@ av::Point2d ToGuiView(const av::Point2d& p, const av::ViewWindow& view) {
   auto res = p - av::Point2d{view.world_center_x, view.world_center_y};
   res = Rotate(res, view.world_center_heading);
   res /= view.zoom_ratio;
-  res.y += view.window_height / 2;
+  res.y = -res.y + view.window_height / 2;
   res.x += view.window_width / 2;
   return res;
 }
@@ -49,7 +49,7 @@ namespace av {
 
 World::World() {
   // map_ = ApolloMap{}.InitMap("/home/caros/adu_data/map/map/base_map.bin");
-  map_ = ApolloMap{}.InitMap("/home/caros/adu_data/map/shougang_map/base_map.bin");
+  map_ = ApolloMap{}.InitMap("/home/caros/adu_data/map/map_yizhuang/base_map.bin");
 
   double min_x = std::numeric_limits<double>::max();
   double min_y = std::numeric_limits<double>::max();

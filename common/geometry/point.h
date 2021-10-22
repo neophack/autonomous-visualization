@@ -14,7 +14,6 @@ struct Point3d {
   double z{0.};
 };
 
-
 Point2d& operator+=(Point2d& v, const double n);
 Point2d& operator-=(Point2d& v, const double n);
 Point2d& operator*=(Point2d& v, const double n);

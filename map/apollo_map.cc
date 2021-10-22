@@ -11,8 +11,11 @@ MapGraph ApolloMap::InitMap(const std::string& path) const {
   MapGraph graph{};
   neodrive::global::hdmap::Map proto_map{};
   std::fstream input(path, std::ios::in | std::ios::binary);
-  std::cout << "load... map from: " << path << std::endl;
-  if (!input.good() || !proto_map.ParseFromIstream(&input)) return graph;
+  std::cout << "load map from: " << path << std::endl;
+  if (!input.good() || !proto_map.ParseFromIstream(&input)) {
+    std::cout << "failed!" << std::endl;
+    return graph;
+  }
   std::cout << "successfully!" << std::endl;
 
   // Build graph

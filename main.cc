@@ -108,7 +108,7 @@ int main(int, char**) {
     auto view = ImGui::GetMainViewport();
     world.GetGuiViewConf()->window_width = view->Size.x;
     world.GetGuiViewConf()->window_height = view->Size.y;
-    world.GetGuiViewConf()->zoom_ratio = 0.8;
+    world.GetGuiViewConf()->zoom_ratio = 5;
     world.GetGuiViewConf()->world_center_heading = 0.;
     std::cout << "window (" << view->Size.x << ", " << view->Size.y << ")"
               << std::endl;
