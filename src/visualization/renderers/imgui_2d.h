@@ -9,6 +9,8 @@ namespace av {
 /// Use Imgui 2d to render the shape
 class Imgui2d final : public Renderer {
  public:
+  ~Imgui2d() = default;
+
   void Draw(const Circle& obj);
   void Draw(const Polygon& obj);
   void Draw(const Polyline& obj);

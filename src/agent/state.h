@@ -32,7 +32,7 @@ struct Operation {
 };
 
 struct State {
-  enum class Type { UNKNOWN, PEDESTRIAN, BICYCLE, VEHICLE, EGO };
+  enum class Type { UNKNOWN, PEDESTRIAN, BICYCLE, VEHICLE };
 
   std::string id{};
   Type type{Type::UNKNOWN};

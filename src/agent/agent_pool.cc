@@ -1,14 +1,24 @@
 #include "agent_pool.h"
 
+#include <iostream>
+
 namespace av {
 
 void AgentPool::Update(State&& s) {
+  if (s.time < newest_time_ - 2) {  // in record mode
+    time_window_.Clear();
+    id_agent_.clear();
+  }
+
+  newest_time_ = s.time;
   auto id = s.id;
-  if (!id_agent_.count(id)) id_agent_.emplace(id, std::move(s));
+  if (!id_agent_.count(id)) id_agent_[id] = Agent();
+  id_agent_[id].Update(std::move(s));
+
   time_window_.UpdateIdAndTime(id, id_agent_[id].GetLatestState()->time);
 
   // Delete agent out time
-  for (const auto& i : time_window_.GetIdsOutWindow()) id_agent_.erase(i);
+  for (const auto& i : time_window_.GetIdsOutWindow()) { id_agent_.erase(i); }
 }
 
 Agent* AgentPool::GetAgent(const std::string& id) {

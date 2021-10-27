@@ -9,4 +9,8 @@ bool IsOverlap(const Box& a, const Box& b) {
          std::min(a.rt.y, b.rt.y) > std::max(a.lb.y, b.lb.y);
 }
 
+bool IsPointInBox(const Point2d& p, const Box& b) {
+  return p.x > b.lb.x && p.x < b.rt.x && p.y > b.lb.y && p.y < b.rt.y;
+}
+
 }  // namespace av

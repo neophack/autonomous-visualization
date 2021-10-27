@@ -6,6 +6,7 @@
 
 #include "state.h"
 #include "agent.h"
+#include "time_window.h"
 
 namespace av {
 
@@ -32,7 +33,8 @@ class AgentPool {
 
  private:
   std::unordered_map<std::string, Agent> id_agent_{};
-  TimeWindow time_window_{1000, 1.};
+  TimeWindow time_window_{10000, 1.};
+  double newest_time_{0.};
 };
 
 

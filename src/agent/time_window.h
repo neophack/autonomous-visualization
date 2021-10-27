@@ -23,10 +23,10 @@ class TimeWindow {
   std::vector<std::string> GetIdsInTime(const double t);
   /// Get all ids out window, this will release all ids out the window
   std::vector<std::string> GetIdsOutWindow();
+  /// clear all states
+  void Clear();
 
  private:
-  void ToHead(Node*);
-
   struct Node {
     std::string id{};
     double time{0.};
@@ -34,10 +34,13 @@ class TimeWindow {
     Node* next{nullptr};
   };
 
+  void ToHead(Node*);
+
   const std::size_t capacity_{1000};
-  const double time_period_{1.};
+  const double time_period_{0.5};
   Node* time_head_{nullptr};
   Node* time_tail_{nullptr};
+  std::vector<std::string> out_ids_{};
 
   std::unordered_map<std::string, Node> id_time_{};
 };

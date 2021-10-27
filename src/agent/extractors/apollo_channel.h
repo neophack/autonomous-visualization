@@ -16,14 +16,19 @@ namespace av {
 class ApolloChannel final : public StateExtractor {
  public:
   ApolloChannel();
+  virtual ~ApolloChannel() = default;
   std::vector<State> ExtractStates() override;
 
  private:
-  std::vector<State> ExtractPerceptionStates(const PerceptionObstacles& msg);
-  std::unordered_map<std::string, stf::vector<Trajectory>>
-  ExtractPredictionFutures(const PredictionObstacles& msg);
-  State ExtractLocalizationState(const LocalizationEstimate& msg);
-  std::vector<Trajectory> ExtractPlanningFutures(const ADCTrajectory& msg);
+  std::vector<State> ExtractPerceptionStates(
+      const neodrive::global::perception::PerceptionObstacles& msg);
+  std::unordered_map<std::string, std::vector<Trajectory>>
+  ExtractPredictionFutures(
+      const neodrive::global::prediction::PredictionObstacles& msg);
+  State ExtractLocalizationState(
+      const neodrive::global::localization::LocalizationEstimate& msg);
+  std::vector<Trajectory> ExtractPlanningFutures(
+      const neodrive::global::planning::ADCTrajectory& msg);
 
  private:
   std::shared_ptr<neodrive::cyber::Node> node_;

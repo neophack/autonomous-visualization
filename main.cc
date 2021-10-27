@@ -10,7 +10,7 @@
 #endif
 #include <iostream>
 
-#include "simulation/world.h"
+#include "world.h"
 
 // Main code
 int main(int, char**) {
@@ -55,7 +55,7 @@ int main(int, char**) {
   SDL_WindowFlags window_flags =
     (SDL_WindowFlags)(SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE |
         SDL_WINDOW_ALLOW_HIGHDPI);
-  SDL_Window* window =SDL_CreateWindow("Dear ImGui SDL2+OpenGL3 example",
+  SDL_Window* window =SDL_CreateWindow("Pnc Visualizer",
                                        SDL_WINDOWPOS_CENTERED,
                                        SDL_WINDOWPOS_CENTERED, 1280, 720,
                                        window_flags);
@@ -67,6 +67,7 @@ int main(int, char**) {
   IMGUI_CHECKVERSION();
   ImGui::CreateContext();
   ImGuiIO& io = ImGui::GetIO(); (void)io;
+  io.IniFilename = nullptr;
   // Enable Keyboard Controls
   //io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
   //io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;
@@ -102,17 +103,16 @@ int main(int, char**) {
     ImGui::NewFrame();
 
     // test
-    // ShowGraph();
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "frame_rate: " << ImGui::GetIO().Framerate << std::endl;
     auto view = ImGui::GetMainViewport();
-    world.GetGuiViewConf()->window_width = view->Size.x;
-    world.GetGuiViewConf()->window_height = view->Size.y;
-    world.GetGuiViewConf()->zoom_ratio = 5;
-    world.GetGuiViewConf()->world_center_heading = 0.;
-    std::cout << "window (" << view->Size.x << ", " << view->Size.y << ")"
+    std::cout << "window size (" << view->Size.x << ", " << view->Size.y << ")"
               << std::endl;
-    world.Draw();
+    // world.GetGuiViewConf()->window_width = view->Size.x;
+    // world.GetGuiViewConf()->window_height = view->Size.y;
+    // world.GetGuiViewConf()->zoom_ratio = 5;
+    // world.GetGuiViewConf()->world_center_heading = 0.;
+    world.TimeGoesBy();
 
     // Rendering
     ImGui::Render();

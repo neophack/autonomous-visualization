@@ -11,5 +11,6 @@ struct Box {
 };
 
 bool IsOverlap(const Box& a, const Box& b);
+bool IsPointInBox(const Point2d& p, const Box& b);
 
 }  // namespace av

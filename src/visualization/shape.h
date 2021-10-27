@@ -23,7 +23,7 @@ struct Style {
   Color color{0, 0, 0, 255};
   bool is_fill{false};
   std::string text{};
-  float width{0.1};
+  double width{0.1};
 };
 
 /// Circle

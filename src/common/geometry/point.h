@@ -14,6 +14,12 @@ struct Point3d {
   double z{0.};
 };
 
+struct HeadingPoint {
+  double x{0.};
+  double y{0.};
+  double heading{0.};
+};
+
 Point2d& operator+=(Point2d& v, const double n);
 Point2d& operator-=(Point2d& v, const double n);
 Point2d& operator*=(Point2d& v, const double n);

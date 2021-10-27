@@ -4,11 +4,13 @@ project(visualizer)
 cmake_policy(SET CMP0027 NEW)
 # Set build mode
 set(CMAKE_CXX_COMPILER /usr/bin/g++ CACHE PATH "")
-set(CXX_OPTIONS "-Wall -Wformat")
+set(CXX_OPTIONS "-Wall -Wextra -pthread -fPIC")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_OPTIONS}")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CXX_OPTIONS}")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG "-Og -g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O2")
+set(CMAKE_BUILD_TYPE "DEBUG")
 
 
 file(GLOB_RECURSE CMAKE_FILES "${CMAKE_SOURCE_DIR}/cmake/*.cmake")
@@ -20,14 +22,18 @@ include_directories(
   /usr/include/SDL2
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui
   ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends
-  ${CMAKE_CURRENT_SOURCE_DIR}
-  ${CMAKE_CURRENT_SOURCE_DIR}/map
-  ${CMAKE_CURRENT_SOURCE_DIR}/common
-  ${CMAKE_CURRENT_SOURCE_DIR}/common/geometry
-  ${CMAKE_CURRENT_SOURCE_DIR}/visualization
-  ${CMAKE_CURRENT_SOURCE_DIR}/visualization/renderers
-  ${CMAKE_CURRENT_SOURCE_DIR}/simulation
-  ${CMAKE_CURRENT_SOURCE_DIR}/simulation/map
+  ${CMAKE_CURRENT_SOURCE_DIR}/src
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/agent
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/agent/extractors
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/common
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/common/geometry
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/feature
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/feature/features
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/map
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/option
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/option/options
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/visualization
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/visualization/renderers
 )
 
 link_directories(
@@ -52,25 +58,23 @@ set(IMGUI_SRCS
     ${CMAKE_CURRENT_SOURCE_DIR}/third_party/imgui/backends/imgui_impl_opengl3.cpp
 )
 
-file(GLOB_RECURSE VIS_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/visualization/*.cc")
-file(GLOB_RECURSE SIM_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/simulation/*.cc")
-file(GLOB_RECURSE COM_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/common/*.cc")
-file(GLOB_RECURSE MAP_SRCS "${CMAKE_CURRENT_SOURCE_DIR}/map/*.cc")
+file(GLOB_RECURSE SRCS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cc")
+message(${SRCS})
 
 add_executable(
   ${PROJECT_NAME}
-  ${COM_SRCS}
-  ${MAP_SRCS}
   ${IMGUI_SRCS}
-  ${VIS_SRCS}
-  ${SIM_SRCS}
-  main.cc)
-message("${PROTOBUF_LIBRARIES}")
+  ${SRCS}
+  main.cc
+  )
+
 target_link_libraries(
   ${PROJECT_NAME} 
   dl
   ${SDL2_LIBRARIES}
   ${OPENGL_LIBRARIES}
   cyber
+  gflags
+  glog
   protobuf
   )
