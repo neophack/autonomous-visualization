@@ -12,17 +12,22 @@ namespace av {
 /// Manage all agents
 class ValuePool {
  public:
-  /// Constructors ValuePool() = default;
+  /// Constructor
   ValuePool() = default;
+  /// Disable copy constructor
   ValuePool(const ValuePool&) = delete;
+  /// Disable assignment operator
   ValuePool& operator=(const ValuePool&) = delete;
+  /// Default move constructor
   ValuePool(ValuePool&&) = default;
+  /// Default move operator
   ValuePool& operator=(ValuePool&&) = default;
 
-  /// Update states
+  /// Update state of a value
   void UpdateValue(const std::string& id, const double value);
-  /// Get latest value
+  /// Get latest value of a value
   double GetValue(const std::string& id);
+  /// Get all value ids with no param
   std::vector<std::string> GetAllValueIds();
 
  private:

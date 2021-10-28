@@ -8,11 +8,15 @@
 
 namespace av {
 
+/// Derived class to implement the value extrctor interface
 class ApolloChannelValue final : public ValueExtractor {
  public:
+  /// constructor
   ApolloChannelValue();
+  /// Default virtual destructor
   virtual ~ApolloChannelValue() = default;
 
+  /// Override interface to do extractings
   std::vector<std::pair<std::string, double>> ExtractValues() override;
 
  private:

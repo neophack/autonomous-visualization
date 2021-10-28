@@ -15,18 +15,26 @@ namespace av {
 /// Extract state from apollo channel
 class ApolloChannelAgent final : public AgentExtractor {
  public:
+  /// Default constructor
   ApolloChannelAgent();
+  /// Default destructor
   virtual ~ApolloChannelAgent() = default;
+
+  /// Interface implementation
   std::vector<State> ExtractStates() override;
 
  private:
+  /// Extract perception agent
   std::vector<State> ExtractPerceptionStates(
       const neodrive::global::perception::PerceptionObstacles& msg);
   std::unordered_map<std::string, std::vector<Trajectory>>
+  /// Extract prediction futures of agents
   ExtractPredictionFutures(
       const neodrive::global::prediction::PredictionObstacles& msg);
+  /// Extract localization as an agent
   State ExtractLocalizationState(
       const neodrive::global::localization::LocalizationEstimate& msg);
+  /// Extact planning trajectory as future of ego agent
   std::vector<Trajectory> ExtractPlanningFutures(
       const neodrive::global::planning::ADCTrajectory& msg);
 

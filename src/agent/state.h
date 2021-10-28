@@ -9,6 +9,7 @@
 
 namespace av {
 
+/// Waypoint to describe a point on lane
 struct Waypoint {
   double time{0.};
   double s{0.};
@@ -19,6 +20,7 @@ struct Waypoint {
   double z{0.};
 };
 
+/// A combination of waypoints
 struct Trajectory {
   double probability{0.};
   std::string generator{};
@@ -26,11 +28,13 @@ struct Trajectory {
   std::vector<Waypoint> points{};
 };
 
+/// All operations a agent can take, not completed
 struct Operation {
   double throttle_pedal{0.};
   double brake_pedal{0.};
 };
 
+/// Used to describe the state of an agent at a perticular timestamp
 struct State {
   enum class Type { UNKNOWN, PEDESTRIAN, BICYCLE, VEHICLE };
 

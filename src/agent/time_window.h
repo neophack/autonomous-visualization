@@ -27,15 +27,17 @@ class TimeWindow {
   void Clear();
 
  private:
+  /// Bi-linked list to store time info of each id
   struct Node {
     std::string id{};
     double time{0.};
     Node* prev{nullptr};
     Node* next{nullptr};
   };
-
+  /// Move a node from list(or not) to head
   void ToHead(Node*);
 
+ private:
   const std::size_t capacity_{1000};
   const double time_period_{0.5};
   Node* time_head_{nullptr};

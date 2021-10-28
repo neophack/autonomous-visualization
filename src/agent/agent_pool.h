@@ -10,17 +10,21 @@
 
 namespace av {
 
-/// Manage all agents
+/// Manage class for all agents
 class AgentPool {
  public:
   /// Constructors
   AgentPool() = default;
+  /// Disable copy constructor
   AgentPool(const AgentPool&) = delete;
+  /// Disable assignment operator
   AgentPool& operator=(const AgentPool&) = delete;
+  /// Default move constructor
   AgentPool(AgentPool&&) = default;
+  /// Default move operator
   AgentPool& operator=(AgentPool&&) = default;
 
-  /// Update states
+  /// Update state of an agent
   void Update(State&&);
   /// Get agent pointer by id
   Agent* GetAgent(const std::string& id);

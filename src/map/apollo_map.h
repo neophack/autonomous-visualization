@@ -9,6 +9,7 @@ namespace av {
 class ApolloMap final : public MapAdapter {
  public:
   virtual ~ApolloMap() = default;
+  /// Implementation of adapter interface
   MapGraph InitMap(const std::string& path) const override ;
 };
 
