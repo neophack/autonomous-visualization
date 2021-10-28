@@ -1,3 +1,5 @@
+![demo](docs/images/demo.gif)
+
 Autonomous-Visualization is a tool to visulize map and agents for self-driving(PnC) developers. It's based on two libraries:
 
 - [Dear ImGui](https://github.com/ocornut/imgui)
@@ -55,5 +57,6 @@ export CYBER_IP=xxx.xxx.xxx.xxx
 # Architecture
 
 The `.png` picture is created by [Draw.io](https://app.diagrams.net/) you can re-edit the pic with that.
+
 ![architecture](docs/images/arch.png)
 
