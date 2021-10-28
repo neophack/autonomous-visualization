@@ -1,4 +1,4 @@
-#include "visualization/renderers/imgui_2d.h"
+#include "imgui_2d.h"
 
 #include "imgui.h"
 

@@ -7,7 +7,7 @@
 
 namespace av {
 
-class StateExtractor {
+class AgentExtractor {
  public:
   virtual std::vector<State> ExtractStates() = 0;
 };

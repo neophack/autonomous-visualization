@@ -1,5 +1,6 @@
 #include "agent_viewer.h"
 #include "shape.h"
+#include "imgui.h"
 #include "imgui_2d.h"
 #include "feature_helper.h"
 
@@ -12,7 +13,10 @@ AgentViewer::AgentViewer(AgentPool* ap) : agents_{ap} {
 }
 
 void AgentViewer::Execute(Config* conf) {
-  if (!agents_) return;
+  if (ImGui::CollapsingHeader("Agent Viewer")) {
+    ImGui::Checkbox("Is Show", &conf->agent_viewer.is_show);
+  }
+  if (!conf->agent_viewer.is_show) return;
 
   // Obstacle
   Style his_style{.color = conf->agent_viewer.history_col,

@@ -1,6 +1,6 @@
 /// Define the render interface
 #pragma once
-#include "visualization/shape.h"
+#include "shape.h"
 
 namespace av {
 

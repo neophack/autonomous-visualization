@@ -6,7 +6,7 @@
 namespace av {
 namespace feature {
 
-Box GetViewBox(const MainView& view) {
+Box GetViewBox(const MainViewConf& view) {
   double sin_h = std::sin(view.center.heading);
   double cos_h = std::cos(view.center.heading);
   Point2d cen{view.center.x, view.center.y};
@@ -27,7 +27,7 @@ Box GetViewBox(const MainView& view) {
 
 Point2d To2d(const Point3d& p) { return {p.x, p.y}; }
 
-Point2d ToGuiView(const Point2d& p, const MainView& view) {
+Point2d ToGuiView(const Point2d& p, const MainViewConf& view) {
   auto res = p - Point2d{view.center.x, view.center.y};
   res = Rotate(res, view.center.heading);
   res /= view.zoom_ratio;

@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "imgui_2d.h"
+#include "imgui.h"
 #include "map/apollo_map.h"
 #include "shape.h"
 #include "feature_helper.h"
@@ -32,6 +33,11 @@ MapViewer::MapViewer(MapGraph* m) : map_{m} {
 }
 
 void MapViewer::Execute(Config* conf) {
+  if (ImGui::CollapsingHeader("Map Viewer")) {
+    ImGui::Checkbox("Is Show", &conf->map_viewer.is_show);
+  }
+  if (!conf->map_viewer.is_show) return;
+
   auto view_box = feature::GetViewBox(conf->main_view);
   for (auto& [lane_id, lane_box] : lane_boxes_) {
     if (IsOverlap(lane_box, view_box)) DrawLane(lane_id, conf);

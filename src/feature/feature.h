@@ -7,6 +7,7 @@ namespace av {
 
 class Feature {
  public:
+  void Run(Config*);
   virtual void Execute(Config*) = 0;
 };
 

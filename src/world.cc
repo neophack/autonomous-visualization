@@ -1,41 +1,47 @@
 #include "world.h"
 
 #include "apollo_map.h"
-#include "apollo_channel.h"
-#include "main_view_option.h"
+#include "apollo_channel_agent.h"
+#include "apollo_channel_value.h"
+
+#include "viewer_option.h"
 #include "map_viewer.h"
 #include "agent_viewer.h"
+#include "value_ploter.h"
 
 namespace av {
 
 World::World() {
-  // map
-  map_ = ApolloMap{}.InitMap(conf_.world.map_path);
+  // Map
+  map_ = ApolloMap{}.InitMap(conf_.map_viewer.map_path);
 
-  // agent
-  agent_extractors_.push_back(std::move(std::make_unique<ApolloChannel>()));
+  // Agent
+  agent_extrs_.push_back(std::move(std::make_unique<ApolloChannelAgent>()));
 
-  // option
-  options_.push_back(std::move(
-      std::make_unique<MainViewOption>(&map_, &agents_)));
+  // Value 
+  value_extrs_.push_back(std::move(std::make_unique<ApolloChannelValue>()));
 
-  // functions
-  funcs_.push_back(std::move(std::make_unique<MapViewer>(&map_)));
-  funcs_.push_back(std::move(std::make_unique<AgentViewer>(&agents_)));
+  // Feature
+  features_.push_back(std::move(
+        std::make_unique<ViewerOption>(&map_, &agents_)));
+  features_.push_back(std::move(std::make_unique<MapViewer>(&map_)));
+  features_.push_back(std::move(std::make_unique<AgentViewer>(&agents_)));
+  features_.push_back(std::move(std::make_unique<ValuePloter>(&values_)));
 }
 
 void World::TimeGoesBy() {
-  // Update data
-  // agent
-  for (auto& e : agent_extractors_) {
+  // Update agent
+  for (auto& e : agent_extrs_) {
     for (auto& s : e->ExtractStates()) { agents_.Update(std::move(s)); }
   }
 
-  // Update option
-  for (auto& o : options_) o->Update(&conf_);
+  // Update values
+  for (auto& e : value_extrs_) {
+    for (auto& [id, v] : e->ExtractValues()) { values_.UpdateValue(id, v); }
+  }
 
-  // Execute funcs
-  for (auto& f : funcs_) f->Execute(&conf_);
+  // Execute features
+  for (auto& f : features_) f->Run(&conf_);
 }
 
 }  // namespace av

@@ -8,11 +8,11 @@
 namespace av {
 namespace feature {
 
-Box GetViewBox(const MainView& view);
+Box GetViewBox(const MainViewConf& view);
 
 Point2d To2d(const Point3d& p);
 
-Point2d ToGuiView(const Point2d& p, const MainView& view);
+Point2d ToGuiView(const Point2d& p, const MainViewConf& view);
 
 }  // namespace feature
 }  // namespace av

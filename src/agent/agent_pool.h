@@ -37,5 +37,4 @@ class AgentPool {
   double newest_time_{0.};
 };
 
-
 }  // namespace av

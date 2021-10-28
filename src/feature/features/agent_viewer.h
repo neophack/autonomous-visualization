@@ -7,7 +7,7 @@
 
 namespace av {
 
-class AgentViewer : public Feature {
+class AgentViewer final : public Feature {
  public:
   AgentViewer() = delete;
   virtual ~AgentViewer() = default;

@@ -1,4 +1,4 @@
-#include "apollo_channel.h"
+#include "apollo_channel_agent.h"
 
 #include <iostream>
 
@@ -12,10 +12,10 @@ av::State::Type ToType(int t) {
 
 namespace av {
 
-ApolloChannel::ApolloChannel() {
+ApolloChannelAgent::ApolloChannelAgent() {
   neodrive::cyber::Init("apollo_channel");
 
-  node_ = neodrive::cyber::CreateNode("auto_vis");
+  node_ = neodrive::cyber::CreateNode("av_agent");
   reader_loc_ = node_->CreateReader<
       neodrive::global::localization::LocalizationEstimate>(
           "/localization/100hz/localization_pose");
@@ -30,7 +30,8 @@ ApolloChannel::ApolloChannel() {
           "/pnc/prediction");
 }
 
-std::vector<State> ApolloChannel::ExtractStates() {
+std::vector<State> ApolloChannelAgent::ExtractStates() {
+  std::cout << "Apollo channel agent ====================" << std::endl;
   std::vector<State> res{};
 
   // Extract all obstacles
@@ -67,7 +68,7 @@ std::vector<State> ApolloChannel::ExtractStates() {
   return res;
 }
 
-std::vector<State> ApolloChannel::ExtractPerceptionStates(
+std::vector<State> ApolloChannelAgent::ExtractPerceptionStates(
     const neodrive::global::perception::PerceptionObstacles& msg) {
   std::vector<State> res{};
   if (msg.perception_obstacle_size() == 0) return res;
@@ -89,7 +90,7 @@ std::vector<State> ApolloChannel::ExtractPerceptionStates(
 }
 
 std::unordered_map<std::string, std::vector<Trajectory>>
-ApolloChannel::ExtractPredictionFutures(
+ApolloChannelAgent::ExtractPredictionFutures(
     const neodrive::global::prediction::PredictionObstacles& msg) {
   std::unordered_map<std::string, std::vector<Trajectory>> res{};
   for (const auto& obs : msg.prediction_obstacle()) {
@@ -110,7 +111,7 @@ ApolloChannel::ExtractPredictionFutures(
   return res;
 }
 
-State ApolloChannel::ExtractLocalizationState(
+State ApolloChannelAgent::ExtractLocalizationState(
     const neodrive::global::localization::LocalizationEstimate& msg) {
   std::vector<Point3d> shape{};
   State res{
@@ -142,7 +143,7 @@ State ApolloChannel::ExtractLocalizationState(
   return res;
 }
 
-std::vector<Trajectory> ApolloChannel::ExtractPlanningFutures(
+std::vector<Trajectory> ApolloChannelAgent::ExtractPlanningFutures(
     const neodrive::global::planning::ADCTrajectory& msg) {
   Trajectory traj{.probability=1., .generator="planning"};
   for (const auto& p : msg.adc_trajectory_point()) {

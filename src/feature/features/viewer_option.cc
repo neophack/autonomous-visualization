@@ -1,4 +1,4 @@
-#include "main_view_option.h"
+#include "viewer_option.h"
 
 #include "imgui.h"
 
@@ -6,25 +6,26 @@
 
 namespace av {
 
-MainViewOption::MainViewOption(MapGraph* m, AgentPool* ap)
-    : map_{m}, agents_{ap} {}
+ViewerOption::ViewerOption(MapGraph* m, AgentPool* ap) : map_{m}, agents_{ap} {}
 
-void MainViewOption::Update(Config* conf) {
-  // update window
+void ViewerOption::Execute(Config* conf) {
+  // Update window size
   auto view = ImGui::GetMainViewport();
   conf->main_view.width = view->Size.x;
   conf->main_view.height = view->Size.y;
 
-  // Update ratio
-  double wheel = ImGui::GetIO().MouseWheel;
-  if (wheel < -0.5) conf->main_view.zoom_ratio *= 1.2;
-  if (wheel > 0.5) conf->main_view.zoom_ratio /= 1.2;
-
   // update center
   SetDefaultCenter(conf);
+
+  if (ImGui::CollapsingHeader("Viewer Option")) {
+    ImGui::Text("You can now use mouse to change the view");
+    double wheel = ImGui::GetIO().MouseWheel;
+    if (wheel < -0.5) conf->main_view.zoom_ratio *= 1.2;
+    if (wheel > 0.5) conf->main_view.zoom_ratio /= 1.2;
+  }
 }
 
-void MainViewOption::SetDefaultCenter(Config* conf) {
+void ViewerOption::SetDefaultCenter(Config* conf) {
   if (auto ego = agents_->GetAgent("Ego"); ego) {  // Has ego car
     conf->main_view.center.x = ego->GetLatestState()->position.x;
     conf->main_view.center.y = ego->GetLatestState()->position.y;

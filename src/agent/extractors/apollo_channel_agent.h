@@ -1,7 +1,7 @@
 /// Define the class to extract state from apollo channel
 #pragma once
 
-#include "state_extractor.h"
+#include "agent_extractor.h"
 
 #include "cyber.h"
 
@@ -13,10 +13,10 @@
 namespace av {
 
 /// Extract state from apollo channel
-class ApolloChannel final : public StateExtractor {
+class ApolloChannelAgent final : public AgentExtractor {
  public:
-  ApolloChannel();
-  virtual ~ApolloChannel() = default;
+  ApolloChannelAgent();
+  virtual ~ApolloChannelAgent() = default;
   std::vector<State> ExtractStates() override;
 
  private:
@@ -41,8 +41,5 @@ class ApolloChannel final : public StateExtractor {
   std::shared_ptr<neodrive::cyber::Reader<
       neodrive::global::prediction::PredictionObstacles>> reader_prd_{};
 };
-
-
-
 
 }  // namespace av

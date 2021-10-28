@@ -7,7 +7,7 @@
 namespace av {
 
 /// Confs about gui
-struct MainView {
+struct MainViewConf {
   double width{0.};
   double height{0.};
 
@@ -17,6 +17,10 @@ struct MainView {
 };
 
 struct MapViewerConf {
+  bool is_show{true};
+
+  std::string map_path{"/home/caros/data/map/map_yizhuang/base_map.bin"};
+
   Color bound_col{255, 255, 255, 60};  // black
   Color center_col{0, 0, 0, 125};  // red
   double bound_width{3.};
@@ -25,6 +29,8 @@ struct MapViewerConf {
 };
 
 struct AgentViewerConf {
+  bool is_show{true};
+
   Color history_col{0, 255, 0, 255};
   double history_width{1.};
 
@@ -37,17 +43,16 @@ struct AgentViewerConf {
   bool is_show_id{false};
 };
 
-struct WorldConf {
-  std::string map_path{"/home/caros/data/map/map_yizhuang/base_map.bin"};
+struct ValueViewerConf {
+  bool is_show{true};
 };
 
 struct Config {
-  WorldConf world{};
-  MainView main_view{};
-
-  /// functionality
+  /// Features
+  MainViewConf main_view{};
   MapViewerConf map_viewer{};
   AgentViewerConf agent_viewer{};
+  ValueViewerConf value_viewer{};
 };
 
 }  // namespace av

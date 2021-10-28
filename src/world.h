@@ -7,9 +7,10 @@
 #include "config.h"
 #include "map_graph.h"
 #include "agent_pool.h"
-#include "state_extractor.h"
+#include "value_pool.h"
+#include "agent_extractor.h"
+#include "value_extractor.h"
 #include "feature.h"
-#include "option.h"
 
 namespace av {
 
@@ -29,11 +30,12 @@ class World {
   MapGraph map_{};
   /// agent
   AgentPool agents_{};
-  std::vector<std::unique_ptr<StateExtractor>> agent_extractors_{};
-  /// options
-  std::vector<std::unique_ptr<Option>> options_{};
-  /// functions
-  std::vector<std::unique_ptr<Feature>> funcs_{};
+  std::vector<std::unique_ptr<AgentExtractor>> agent_extrs_{};
+  /// value
+  ValuePool values_{};
+  std::vector<std::unique_ptr<ValueExtractor>> value_extrs_{};
+  /// features 
+  std::vector<std::unique_ptr<Feature>> features_{};
 };
 
 }  // namespace av
